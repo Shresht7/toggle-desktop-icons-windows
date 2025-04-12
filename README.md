@@ -12,7 +12,7 @@ Simply run the binary to toggle the desktop icons
 
 > [!TIP]
 >
-> I have setup PowerToys Keyboard Manager run this executable on with a keyboard shortcut.
+> I have setup PowerToys Keyboard Manager to run this executable with a keyboard shortcut.
 
 ## Development
 
