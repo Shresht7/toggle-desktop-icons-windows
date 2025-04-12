@@ -2,6 +2,18 @@
 
 A small utility to toggle desktop icon visibility on Windows.
 
+## Usage
+
+Simply run the binary to toggle the desktop icons
+
+```
+. .\toggle-desktop-icons.exe
+```
+
+> [!TIP]
+>
+> I have setup PowerToys Keyboard Manager run this executable on with a keyboard shortcut.
+
 ## Development
 
 ### Compilation
