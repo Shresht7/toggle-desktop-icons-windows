@@ -22,8 +22,8 @@ Simply run the binary to toggle the desktop icons
 g++ main.cpp -o toggle-desktop-icons.exe  -municode -mwindows
 ```
 
-`-municode`: to support wide-strings (unicode)
-`-mwindows`: because we use `wWinMain()` to setup a GUI application instead of a console application
+- `-municode`: to support wide-strings (unicode)
+- `-mwindows`: because we use `wWinMain()` to setup a GUI application instead of a console application
 
 ## References
 
