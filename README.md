@@ -34,6 +34,7 @@ g++ main.cpp -o toggle-desktop-icons.exe  -municode -mwindows
 - https://stackoverflow.com/questions/6402834/how-to-hide-desktop-icons-programmatically
 - https://techcommunity.microsoft.com/discussions/windows10space/showhide-desktop-icons-with-a-single-click/2016194
 - https://www.autohotkey.com/boards/viewtopic.php?t=75890
+- https://github.com/TikoTako/iconHider
 
 ## License
 
