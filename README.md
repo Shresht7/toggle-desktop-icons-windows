@@ -22,8 +22,16 @@ Simply run the binary to toggle the desktop icons
 
 ### Compilation
 
+To compile the `resources.rc` file:
+
 ```sh
-g++ main.cpp -o toggle-desktop-icons.exe  -municode -mwindows
+windres resources.rc -O coff -o resources.o
+```
+
+To compile the main executable (and link the resources object):
+
+```sh
+g++ -municode -mwindows main.cpp resources.o -o toggle-desktop-icons.exe
 ```
 
 - `-municode`: to support wide-strings (unicode)

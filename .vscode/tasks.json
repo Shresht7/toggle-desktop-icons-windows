@@ -1,0 +1,45 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "🖼️ Compile Resources",
+            "type": "shell",
+            "command": "windres",
+            "args": [
+                "resources.rc",
+                "-O",
+                "coff",
+                "-o",
+                "resources.o"
+            ]
+        },
+        {
+            "label": "📦 Compile Executable",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-municode",
+                "-mwindows",
+                "main.cpp",
+                "resources.o",
+                "-o",
+                "toggle-desktop-icons.exe"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": [
+                "🖼️ Compile Resources"
+            ]
+        }
+    ]
+}
