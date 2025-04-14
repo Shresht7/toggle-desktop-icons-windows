@@ -2,6 +2,8 @@
 
 A small utility to toggle desktop icon visibility on Windows.
 
+![Icon](./resources/icon.ico)
+
 ## Usage
 
 Simply run the binary to toggle the desktop icons
