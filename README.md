@@ -31,7 +31,7 @@ windres resources.rc -O coff -o resources.o
 To compile the main executable (and link the resources object):
 
 ```sh
-g++ -municode -mwindows main.cpp resource.o -o toggle-desktop-icons.exe
+g++ -municode -mwindows main.cpp resources.o -o toggle-desktop-icons.exe
 ```
 
 - `-municode`: to support wide-strings (unicode)
