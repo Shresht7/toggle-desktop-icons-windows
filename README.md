@@ -14,11 +14,7 @@ Simply run the binary to toggle the desktop icons
 
 > [!TIP]
 >
-> You can create a shortcut and place it in the `$HOME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\` folder to run it using the Start Menu. I recommend creating a `Shortcuts` folder to keep your shortcuts organized.
-
-> [!TIP]
->
-> I have setup PowerToys Keyboard Manager to run this executable with a keyboard shortcut.
+> You can create a shortcut and place it in the `$HOME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\` folder to run it using the Start Menu. I recommend creating a `Shortcuts` folder there to keep all your shortcuts organized.
 
 ## Development
 
