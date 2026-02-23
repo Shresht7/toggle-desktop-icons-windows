@@ -68,7 +68,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLin
     /// @brief The command-line argument count
     int argc;
     /// @brief The command-line arguments as an array of wide strings (unicode)
-    LPWSTR *argv = CommandLineToArgvW(lpCmdLine, &argc);
+    LPWSTR *argv = CommandLineToArgvW(GetCommandLineW(), &argc);
 
     if (argc < 2 || wcscmp(argv[1], L"toggle") == 0)
     {
