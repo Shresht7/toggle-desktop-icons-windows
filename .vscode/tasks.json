@@ -13,7 +13,14 @@
                 "coff",
                 "-o",
                 "resources.o"
-            ]
+            ],
+            "options": {
+                "shell": {
+                    "args": [
+                        "-NoProfile"
+                    ]
+                }
+            }
         },
         {
             "label": "📦 Compile Executable",
@@ -22,13 +29,19 @@
             "args": [
                 "-municode",
                 "-mwindows",
+                "-lshell32",
                 "main.cpp",
                 "resources.o",
                 "-o",
-                "toggle-desktop-icons.exe"
+                "desktop-icons.exe"
             ],
             "options": {
-                "cwd": "${workspaceFolder}"
+                "cwd": "${workspaceFolder}",
+                "shell": {
+                    "args": [
+                        "-NoProfile"
+                    ]
+                }
             },
             "problemMatcher": [
                 "$msCompile"

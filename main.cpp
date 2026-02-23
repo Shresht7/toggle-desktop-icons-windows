@@ -1,4 +1,18 @@
-#include <windows.h> // Windows API
+#include <windows.h>  // Windows API
+#include <shellapi.h> // For shell-related functions like `CommandLineToArgvW`
+#include <cstdio>     // For `freopen` to redirect output to the console
+#include <iostream>   // For I/O operations (e.g., `std::cout`)
+
+#include "main.h" // Include the header file for function declarations
+
+/// The name of the application binary
+const char *NAME = "desktop-icons.exe";
+
+/// A short description of the application
+const char *DESCRIPTION = "A simple utility to toggle the visibility of desktop icons on Windows";
+
+/// The version number
+const char *VERSION = "v0.2.0";
 
 /// Command ID used by Explorer to toggle desktop icons
 // https://stackoverflow.com/questions/6402834/how-to-hide-desktop-icons-programmatically
@@ -35,6 +49,28 @@ HWND GetShellViewWindow()
     return defView;
 }
 
+/// @brief Checks if desktop icons are currently visible
+/// @return `true` if icons are visible, `false` otherwise
+bool AreIconsVisible()
+{
+    DWORD value = 0;
+    DWORD size = sizeof(DWORD);
+    LSTATUS result = RegGetValue(
+        HKEY_CURRENT_USER,
+        L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        L"HideIcons",
+        RRF_RT_REG_DWORD,
+        nullptr,
+        &value,
+        &size);
+    if (result != ERROR_SUCCESS)
+    {
+        std::fprintf(stderr, "Failed to read registry value: %lu\n", result);
+        return false; // Assume icons are hidden if we can't read the value
+    }
+    return value == 0; // If HideIcons is 0, icons are visible. If it's 1, icons are hidden.
+}
+
 /// @brief Sends the command to toggle desktop icons to the appropriate window
 void SendToggleMessage()
 {
@@ -55,6 +91,95 @@ void SendToggleMessage()
 /// `nCmdShow`: How the window should be shown (minimized, maximized, normal etc). Used when calling `ShowWindow()`
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLine, int nCmdShow)
 {
-    SendToggleMessage();
-    return 0;
+    /// The exit status code of the application. `EXIT_SUCCESS` (0) for success, `EXIT_FAILURE` (1) for failure
+    int status = EXIT_SUCCESS;
+
+    // Attach to the parent process's console (if it exists) so we can print output there
+    if (AttachConsole(ATTACH_PARENT_PROCESS))
+    {
+        // Redirect standard output and standard error to the console
+        freopen("CONOUT$", "w", stdout);
+        freopen("CONOUT$", "w", stderr);
+    }
+
+    /// @brief The command-line argument count
+    int argc;
+    /// @brief The command-line arguments as an array of wide strings (unicode)
+    LPWSTR *argv = CommandLineToArgvW(GetCommandLineW(), &argc);
+    if (argv == nullptr)
+    {
+        std::fprintf(stderr, "Failed to parse command line arguments.\n");
+        status = EXIT_FAILURE;
+        return status;
+    }
+
+    if (argc < 2 || wcscmp(argv[1], L"toggle") == 0)
+    {
+        SendToggleMessage();
+    }
+    else if (wcscmp(argv[1], L"visible") == 0)
+    {
+        auto visible = AreIconsVisible() ? "true" : "false";
+        std::cout << visible << std::endl;
+    }
+    else if (wcscmp(argv[1], L"show") == 0)
+    {
+        if (!AreIconsVisible())
+        {
+            SendToggleMessage();
+        }
+    }
+    else if (wcscmp(argv[1], L"hide") == 0)
+    {
+        if (AreIconsVisible())
+        {
+            SendToggleMessage();
+        }
+    }
+    else if (wcscmp(argv[1], L"--version") == 0 || wcscmp(argv[1], L"-v") == 0 || wcscmp(argv[1], L"version") == 0)
+    {
+        PrintVersion();
+    }
+    else if (wcscmp(argv[1], L"--help") == 0 || wcscmp(argv[1], L"-h") == 0 || wcscmp(argv[1], L"help") == 0)
+    {
+        PrintHelp();
+    }
+    else
+    {
+        // If the command is unrecognized, print an error message and show the help
+        std::string narrowCommand(argv[1], argv[1] + wcslen(argv[1]));
+        std::cerr << "Unknown command: " << narrowCommand << std::endl;
+        std::cerr << std::endl;
+        PrintHelp();
+        status = EXIT_FAILURE;
+    }
+
+    // Free the memory allocated by CommandLineToArgvW
+    LocalFree(argv);
+
+    // Return the appropriate exit code
+    return status;
+}
+
+/// Prints the version of the application
+void PrintVersion()
+{
+    std::cout << VERSION << std::endl;
+}
+
+/// Prints the help message
+void PrintHelp()
+{
+    std::cout << DESCRIPTION << std::endl;
+    std::cout << std::endl;
+    std::cout << "Usage: " << NAME << " <command>" << std::endl;
+    std::cout << std::endl;
+    std::cout << "Commands:" << std::endl;
+    std::cout << "  toggle  - Toggles the visibility of desktop icons" << std::endl;
+    std::cout << "  show    - Shows the desktop icons" << std::endl;
+    std::cout << "  hide    - Hides the desktop icons" << std::endl;
+    std::cout << "  visible - Prints 'true' if desktop icons are visible, 'false' otherwise" << std::endl;
+    std::cout << "  help    - Shows this help message" << std::endl;
+    std::cout << "  version - Prints the application version" << std::endl;
+    std::cout << std::endl;
 }
