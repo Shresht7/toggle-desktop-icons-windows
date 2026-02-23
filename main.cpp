@@ -157,7 +157,4 @@ void PrintHelp()
     std::cout << "  help    - Shows this help message" << std::endl;
     std::cout << "  version - Prints the application version" << std::endl;
     std::cout << std::endl;
-    std::cout << "Examples:" << std::endl;
-    std::cout << "  " << NAME << " toggle" << std::endl;
-    std::cout << "  " << NAME << " visible" << std::endl;
 }
