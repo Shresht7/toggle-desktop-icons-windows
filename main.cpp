@@ -3,6 +3,8 @@
 #include <cstdio>     // For `freopen` to redirect output to the console
 #include <iostream>   // For I/O operations (e.g., `std::cout`)
 
+#include "main.h" // Include the header file for function declarations
+
 /// Command ID used by Explorer to toggle desktop icons
 // https://stackoverflow.com/questions/6402834/how-to-hide-desktop-icons-programmatically
 const int TOGGLE_DESKTOP_ICONS = 0x7402;
@@ -102,9 +104,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLin
     }
     else
     {
-        wprintf(L"Unknown command: %s\n", argv[1]);
-        wprintf(L"Usage: %s [toggle|visible]\n", argv[0]);
-        fflush(stdout);
+        PrintHelp();
         status = EXIT_FAILURE;
     }
 
@@ -113,4 +113,26 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLin
 
     // Return the appropriate exit code
     return status;
+}
+
+/// Prints the version of the application
+void PrintVersion()
+{
+    std::cout << VERSION << std::endl;
+}
+
+/// Prints the help message
+void PrintHelp()
+{
+    std::cout << DESCRIPTION << std::endl;
+    std::cout << std::endl;
+    std::cout << "Usage: " << NAME << " <command>" << std::endl;
+    std::cout << std::endl;
+    std::cout << "Commands:" << std::endl;
+    std::cout << "  toggle  - Toggles the visibility of desktop icons" << std::endl;
+    std::cout << "  visible - Prints 'true' if desktop icons are visible, 'false' otherwise" << std::endl;
+    std::cout << std::endl;
+    std::cout << "Examples:" << std::endl;
+    std::cout << "  " << NAME << " toggle" << std::endl;
+    std::cout << "  " << NAME << " visible" << std::endl;
 }
