@@ -5,6 +5,15 @@
 
 #include "main.h" // Include the header file for function declarations
 
+/// The name of the application binary
+const char *NAME = "toggle-desktop-icons.exe";
+
+/// A short description of the application
+const char *DESCRIPTION = "A simple utility to toggle the visibility of desktop icons on Windows";
+
+/// The version number
+const char *VERSION = "v0.1.0";
+
 /// Command ID used by Explorer to toggle desktop icons
 // https://stackoverflow.com/questions/6402834/how-to-hide-desktop-icons-programmatically
 const int TOGGLE_DESKTOP_ICONS = 0x7402;
