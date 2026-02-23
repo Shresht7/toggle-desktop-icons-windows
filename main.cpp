@@ -102,8 +102,20 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLin
         auto visible = AreIconsVisible() ? "true" : "false";
         std::cout << visible << std::endl;
     }
+    else if (wcscmp(argv[1], L"--version") == 0 || wcscmp(argv[1], L"-v") == 0 || wcscmp(argv[1], L"version") == 0)
+    {
+        PrintVersion();
+    }
+    else if (wcscmp(argv[1], L"--help") == 0 || wcscmp(argv[1], L"-h") == 0 || wcscmp(argv[1], L"help") == 0)
+    {
+        PrintHelp();
+    }
     else
     {
+        // If the command is unrecognized, print an error message and show the help
+        auto command = std::wstring(argv[1]);
+        std::wcerr << L"Unknown command: " << command << std::endl;
+        std::cout << std::endl;
         PrintHelp();
         status = EXIT_FAILURE;
     }
@@ -131,6 +143,8 @@ void PrintHelp()
     std::cout << "Commands:" << std::endl;
     std::cout << "  toggle  - Toggles the visibility of desktop icons" << std::endl;
     std::cout << "  visible - Prints 'true' if desktop icons are visible, 'false' otherwise" << std::endl;
+    std::cout << "  help    - Shows this help message" << std::endl;
+    std::cout << "  version - Prints the application version" << std::endl;
     std::cout << std::endl;
     std::cout << "Examples:" << std::endl;
     std::cout << "  " << NAME << " toggle" << std::endl;
