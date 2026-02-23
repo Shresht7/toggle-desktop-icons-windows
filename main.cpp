@@ -1,4 +1,6 @@
-#include <windows.h> // Windows API
+#include <windows.h>  // Windows API
+#include <shellapi.h> // For shell-related functions
+#include <cstdio>     // For freopen
 
 /// Command ID used by Explorer to toggle desktop icons
 // https://stackoverflow.com/questions/6402834/how-to-hide-desktop-icons-programmatically
@@ -55,6 +57,26 @@ void SendToggleMessage()
 /// `nCmdShow`: How the window should be shown (minimized, maximized, normal etc). Used when calling `ShowWindow()`
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLine, int nCmdShow)
 {
-    SendToggleMessage();
+    // Attach to the parent process's console (if it exists) so we can print output there
+    if (AttachConsole(ATTACH_PARENT_PROCESS))
+    {
+        // Redirect standard output and standard error to the console
+        freopen("CONOUT$", "w", stdout);
+        freopen("CONOUT$", "w", stderr);
+    }
+
+    /// @brief The command-line argument count
+    int argc;
+    /// @brief The command-line arguments as an array of wide strings (unicode)
+    LPWSTR *argv = CommandLineToArgvW(lpCmdLine, &argc);
+
+    if (argc < 2 || wcscmp(argv[1], L"toggle") == 0)
+    {
+        SendToggleMessage();
+    }
+
+    // Free the memory allocated by CommandLineToArgvW
+    LocalFree(argv);
+
     return 0;
 }
