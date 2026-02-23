@@ -52,7 +52,7 @@
             },
             "dependsOn": [
                 "🖼️ Compile Resources"
-            ],
+            ]
         }
     ]
 }
