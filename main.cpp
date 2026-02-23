@@ -56,7 +56,7 @@ bool AreIconsVisible()
         &size);
     if (result != ERROR_SUCCESS)
     {
-        std::fwprintf(stderr, L"Failed to read registry value: %lu\n", result);
+        std::fprintf(stderr, "Failed to read registry value: %lu\n", result);
         return false; // Assume icons are hidden if we can't read the value
     }
     return value == 0; // If HideIcons is 0, icons are visible. If it's 1, icons are hidden.
@@ -99,7 +99,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLin
     LPWSTR *argv = CommandLineToArgvW(GetCommandLineW(), &argc);
     if (argv == nullptr)
     {
-        std::fwprintf(stderr, L"Failed to parse command line arguments.\n");
+        std::fprintf(stderr, "Failed to parse command line arguments.\n");
         status = EXIT_FAILURE;
         return status;
     }
@@ -138,9 +138,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLin
     else
     {
         // If the command is unrecognized, print an error message and show the help
-        auto command = std::wstring(argv[1]);
-        std::wcerr << L"Unknown command: " << command << std::endl;
-        std::cout << std::endl;
+        std::string narrowCommand(argv[1], argv[1] + wcslen(argv[1]));
+        std::cerr << "Unknown command: " << narrowCommand << std::endl;
+        std::cerr << std::endl;
         PrintHelp();
         status = EXIT_FAILURE;
     }
