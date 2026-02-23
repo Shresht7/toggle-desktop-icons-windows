@@ -46,7 +46,7 @@ bool AreIconsVisible()
 {
     DWORD value = 0;
     DWORD size = sizeof(DWORD);
-    RegGetValue(
+    LSTATUS result = RegGetValue(
         HKEY_CURRENT_USER,
         L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
         L"HideIcons",
@@ -54,6 +54,11 @@ bool AreIconsVisible()
         nullptr,
         &value,
         &size);
+    if (result != ERROR_SUCCESS)
+    {
+        std::fwprintf(stderr, L"Failed to read registry value: %lu\n", result);
+        return false; // Assume icons are hidden if we can't read the value
+    }
     return value == 0; // If HideIcons is 0, icons are visible. If it's 1, icons are hidden.
 }
 
