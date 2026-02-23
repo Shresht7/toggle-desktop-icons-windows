@@ -113,6 +113,20 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLin
         auto visible = AreIconsVisible() ? "true" : "false";
         std::cout << visible << std::endl;
     }
+    else if (wcscmp(argv[1], L"show") == 0)
+    {
+        if (!AreIconsVisible())
+        {
+            SendToggleMessage();
+        }
+    }
+    else if (wcscmp(argv[1], L"hide") == 0)
+    {
+        if (AreIconsVisible())
+        {
+            SendToggleMessage();
+        }
+    }
     else if (wcscmp(argv[1], L"--version") == 0 || wcscmp(argv[1], L"-v") == 0 || wcscmp(argv[1], L"version") == 0)
     {
         PrintVersion();
@@ -153,6 +167,8 @@ void PrintHelp()
     std::cout << std::endl;
     std::cout << "Commands:" << std::endl;
     std::cout << "  toggle  - Toggles the visibility of desktop icons" << std::endl;
+    std::cout << "  show    - Shows the desktop icons" << std::endl;
+    std::cout << "  hide    - Hides the desktop icons" << std::endl;
     std::cout << "  visible - Prints 'true' if desktop icons are visible, 'false' otherwise" << std::endl;
     std::cout << "  help    - Shows this help message" << std::endl;
     std::cout << "  version - Prints the application version" << std::endl;
