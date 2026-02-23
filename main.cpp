@@ -35,6 +35,16 @@ HWND GetShellViewWindow()
     return defView;
 }
 
+/// @brief Sends the command to toggle desktop icons to the appropriate window
+void SendToggleMessage()
+{
+    HWND defView = GetShellViewWindow();
+    if (defView)
+    {
+        SendMessage(defView, WM_COMMAND, (WPARAM)TOGGLE_DESKTOP_ICONS, 0);
+    }
+}
+
 /// The main entrypoint of the application
 ///
 /// We used `wWinMain` instead of `main` to create a GUI application instead of a console application
@@ -45,10 +55,6 @@ HWND GetShellViewWindow()
 /// `nCmdShow`: How the window should be shown (minimized, maximized, normal etc). Used when calling `ShowWindow()`
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLine, int nCmdShow)
 {
-    HWND defView = GetShellViewWindow();
-    if (defView)
-    {
-        SendMessage(defView, WM_COMMAND, (WPARAM)TOGGLE_DESKTOP_ICONS, 0);
-    }
+    SendToggleMessage();
     return 0;
 }
