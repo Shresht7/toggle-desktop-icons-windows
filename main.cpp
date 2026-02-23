@@ -37,6 +37,23 @@ HWND GetShellViewWindow()
     return defView;
 }
 
+/// @brief Checks if desktop icons are currently visible
+/// @return `true` if icons are visible, `false` otherwise
+bool AreIconsVisible()
+{
+    DWORD value = 0;
+    DWORD size = sizeof(DWORD);
+    RegGetValue(
+        HKEY_CURRENT_USER,
+        L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        L"HideIcons",
+        RRF_RT_REG_DWORD,
+        nullptr,
+        &value,
+        &size);
+    return value == 0; // If HideIcons is 0, icons are visible. If it's 1, icons are hidden.
+}
+
 /// @brief Sends the command to toggle desktop icons to the appropriate window
 void SendToggleMessage()
 {
