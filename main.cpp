@@ -97,6 +97,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLin
     int argc;
     /// @brief The command-line arguments as an array of wide strings (unicode)
     LPWSTR *argv = CommandLineToArgvW(GetCommandLineW(), &argc);
+    if (argv == nullptr)
+    {
+        std::fwprintf(stderr, L"Failed to parse command line arguments.\n");
+        status = EXIT_FAILURE;
+        return status;
+    }
 
     if (argc < 2 || wcscmp(argv[1], L"toggle") == 0)
     {
