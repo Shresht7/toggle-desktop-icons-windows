@@ -8,6 +8,10 @@ on:
 jobs:
   build-and-release:
     runs-on: windows-latest
+
+    env:
+      APP_NAME: "desktop-icons.exe"
+
     permissions:
       contents: write
       id-token: write
@@ -27,14 +31,14 @@ jobs:
         shell: msys2 {0}
         run: |
           windres resources.rc -O coff -o resources.o
-          g++ -municode -mwindows -lshell32 main.cpp resources.o -o desktop-icons.exe
+          g++ main.cpp resources.o -o ${{ env.APP_NAME }} -lshell32 -municode -mwindows
 
       - name: Attest build provenance
         uses: actions/attest-build-provenance@v2
         with:
-          subject-path: desktop-icons.exe
+          subject-path: ${{ env.APP_NAME }}
 
       - name: Create release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create ${{ github.ref_name }} desktop-icons.exe --generate-notes
+        run: gh release create ${{ github.ref_name }} ${{ env.APP_NAME }} --generate-notes
