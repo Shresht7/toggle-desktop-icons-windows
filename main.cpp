@@ -10,6 +10,10 @@ HWND GetShellViewWindow()
 {
     // Get the handle to the Program Manager (desktop background window)
     HWND progman = FindWindow(L"Progman", nullptr);
+    if (!progman)
+    {
+        return nullptr; // If we can't find Progman (very unlikely), we can't proceed
+    }
 
     // Try to find the `SHELLDLL_DefView` as a child of Progman
     HWND defView = FindWindowEx(progman, nullptr, L"SHELLDLL_DefView", nullptr);
