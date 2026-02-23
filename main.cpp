@@ -1,6 +1,7 @@
 #include <windows.h>  // Windows API
 #include <shellapi.h> // For shell-related functions
 #include <cstdio>     // For freopen
+#include <iostream>
 
 /// Command ID used by Explorer to toggle desktop icons
 // https://stackoverflow.com/questions/6402834/how-to-hide-desktop-icons-programmatically
@@ -90,6 +91,17 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLin
     if (argc < 2 || wcscmp(argv[1], L"toggle") == 0)
     {
         SendToggleMessage();
+    }
+    else if (wcscmp(argv[1], L"visible") == 0)
+    {
+        auto visible = AreIconsVisible() ? "true" : "false";
+        std::cout << visible << std::endl;
+    }
+    else
+    {
+        wprintf(L"Unknown command: %s\n", argv[1]);
+        wprintf(L"Usage: %s [toggle|visible]\n", argv[0]);
+        fflush(stdout);
     }
 
     // Free the memory allocated by CommandLineToArgvW
