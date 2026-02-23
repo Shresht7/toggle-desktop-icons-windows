@@ -21,7 +21,7 @@ HWND GetShellViewWindow()
         do
         {
             // Enumerate all WorkerW windows
-            workerW = FindWindowEx(nullptr, workerW, L"workerW", nullptr);
+            workerW = FindWindowEx(nullptr, workerW, L"WorkerW", nullptr);
             // Try to find `SHELLDLL_DefView` under this WorkerW
             defView = FindWindowEx(workerW, nullptr, L"SHELLDLL_DefView", nullptr);
         } while (workerW && !defView);
