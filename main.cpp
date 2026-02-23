@@ -1,7 +1,7 @@
 #include <windows.h>  // Windows API
-#include <shellapi.h> // For shell-related functions
-#include <cstdio>     // For freopen
-#include <iostream>
+#include <shellapi.h> // For shell-related functions like `CommandLineToArgvW`
+#include <cstdio>     // For `freopen` to redirect output to the console
+#include <iostream>   // For I/O operations (e.g., `std::cout`)
 
 /// Command ID used by Explorer to toggle desktop icons
 // https://stackoverflow.com/questions/6402834/how-to-hide-desktop-icons-programmatically
@@ -75,6 +75,9 @@ void SendToggleMessage()
 /// `nCmdShow`: How the window should be shown (minimized, maximized, normal etc). Used when calling `ShowWindow()`
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLine, int nCmdShow)
 {
+    /// The exit status code of the application. `EXIT_SUCCESS` (0) for success, `EXIT_FAILURE` (1) for failure
+    int status = EXIT_SUCCESS;
+
     // Attach to the parent process's console (if it exists) so we can print output there
     if (AttachConsole(ATTACH_PARENT_PROCESS))
     {
@@ -102,10 +105,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLin
         wprintf(L"Unknown command: %s\n", argv[1]);
         wprintf(L"Usage: %s [toggle|visible]\n", argv[0]);
         fflush(stdout);
+        status = EXIT_FAILURE;
     }
 
     // Free the memory allocated by CommandLineToArgvW
     LocalFree(argv);
 
-    return 0;
+    // Return the appropriate exit code
+    return status;
 }
