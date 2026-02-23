@@ -6,15 +6,48 @@ A small utility to toggle desktop icon visibility on Windows.
 
 ## Usage
 
-Simply run the binary to toggle the desktop icons
-
 ```
-. .\desktop-icons.exe
+desktop-icons [command]
+```
+
+Run with no arguments to toggle desktop icons on/off.
+
+### Commands
+
+| Command                      | Description                                          |
+| ---------------------------- | ---------------------------------------------------- |
+| `toggle`                     | Toggle desktop icon visibility (default)             |
+| `show`                       | Show desktop icons (no-op if already visible)        |
+| `hide`                       | Hide desktop icons (no-op if already hidden)         |
+| `visible`                    | Print `true` if icons are visible, `false` otherwise |
+| `help`, `-h`, `--help`       | Show help                                            |
+| `version`, `-v`, `--version` | Show version                                         |
+
+### Examples
+
+```sh
+# Toggle icons on/off
+desktop-icons
+
+# Explicitly hide or show
+desktop-icons hide
+desktop-icons show
+
+# Check current state
+desktop-icons visible
+
+# Use in a PowerShell script
+if ((desktop-icons visible) -eq "true") {
+    desktop-icons hide
+}
 ```
 
 > [!TIP]
 >
-> You can create a shortcut and place it in the `$HOME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\` folder to run it using the Start Menu. I recommend creating a `Shortcuts` folder there to keep all your shortcuts organized.
+> You can create a shortcut and place it in the `$HOME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\` folder to run it using the Start Menu. I recommend creating a `Shortcuts` folder there to keep all your shortcuts organized. Set the target to the full-path of the compiled `desktop-icons.exe` and provide it with the `toggle` argument.
+
+> [!TIP]
+> You can use something like PowerToys or Raycast to assign a global hotkey to the `desktop-icons.exe toggle` command for quick access.
 
 ## How it works
 
