@@ -22,6 +22,7 @@
             "args": [
                 "-municode",
                 "-mwindows",
+                "-lshell32",
                 "main.cpp",
                 "resources.o",
                 "-o",
