@@ -33,7 +33,7 @@
                 "main.cpp",
                 "resources.o",
                 "-o",
-                "toggle-desktop-icons.exe"
+                "desktop-icons.exe"
             ],
             "options": {
                 "cwd": "${workspaceFolder}",

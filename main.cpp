@@ -6,7 +6,7 @@
 #include "main.h" // Include the header file for function declarations
 
 /// The name of the application binary
-const char *NAME = "toggle-desktop-icons.exe";
+const char *NAME = "desktop-icons.exe";
 
 /// A short description of the application
 const char *DESCRIPTION = "A simple utility to toggle the visibility of desktop icons on Windows";

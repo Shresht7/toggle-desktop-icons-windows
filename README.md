@@ -1,4 +1,4 @@
-# `toggle-desktop-icons-windows`
+# `desktop-icons-windows`
 
 A small utility to toggle desktop icon visibility on Windows.
 
@@ -9,7 +9,7 @@ A small utility to toggle desktop icon visibility on Windows.
 Simply run the binary to toggle the desktop icons
 
 ```
-. .\toggle-desktop-icons.exe
+. .\desktop-icons.exe
 ```
 
 > [!TIP]
@@ -63,7 +63,7 @@ windres resources.rc -O coff -o resources.o
 To compile the main executable (and link the resources object):
 
 ```sh
-g++ -municode -mwindows -lshell32 main.cpp resources.o -o toggle-desktop-icons.exe
+g++ -municode -mwindows -lshell32 main.cpp resources.o -o desktop-icons.exe
 ```
 
 - `-municode`: to support wide-strings (unicode)
